@@ -1,0 +1,28 @@
+<!-- /templates/my-form.html-->
+
+<html>
+    <head>
+        <title>Flask Sample Input Form</title>
+    </head>
+    <body>
+	<h3>Flask | Python | psycopg2 | postgreSQL Sample App</h3>
+        <form action="/form-handler" method="POST">
+            <div>
+		Enter a postgreSQL command, e.g. "SELECT * FROM countries;"
+		<input type="text" name="query">
+            </div>
+            <input type="submit" value="Submit">
+        </form>
+    </body>
+
+    <!-- minimal styling -->
+    <style>
+        form {
+            margin: 1%;
+        }
+
+        div {
+            margin: 1% 0;
+        }
+    </style>
+</html>
