@@ -52,7 +52,6 @@ https://www.geeksforgeeks.org/python-using-for-loop-in-flask/
 import psycopg2
 from config import config
 from flask import Flask, render_template, request
-from create_table import create_tables
  
 def connect(query):
     """ Connect to the PostgreSQL database server """
@@ -72,6 +71,7 @@ def connect(query):
         # execute a query using fetchall()
         cur.execute(query)
         rows = cur.fetchall()
+        #colnames = [desc[0] for desc in cur.description]
 
        # close the communication with the PostgreSQL
         cur.close()
@@ -99,7 +99,11 @@ def form():
 def handle_data():
     rows = connect(request.form['query'])
 
-    return render_template('my-result.html', rows=rows)
+    return render_template('my-form.html', rows=rows)
+
+#handle login data
+@app.route('/login-handler', methods='POST')
+def handle_login():
 
 if __name__ == '__main__':
     app.run(debug = True)
