@@ -60,7 +60,10 @@ def create_tables():
         display_name varchar(16) UNIQUE,
         acc_type varchar(8) REFERENCES PERMISSIONS
     )
-    """,
+    """
+    )
+    
+    gen_view_commands = (
     """
     CREATE VIEW MAINVIEW AS
     SELECT ARCHIVES.title, ARCHIVES.month, ARCHIVES.day, ARCHIVES.year, PARTICIPANTS.first_name, PARTICIPANTS.middle_name, PARTICIPANTS.last_name, PLACES.city, PLACES.state
@@ -77,8 +80,8 @@ def create_tables():
     CREATE VIEW USERSVIEW AS
     SELECT USERS.email_address, USERS.display_name, USERS.acc_type, PERMISSIONS.can_read, PERMISSIONS.can_write, PERMISSIONS.can_update, PERMISSIONS.can_delete, PERMISSIONS.all_access
     FROM USERS JOIN PERMISSIONS ON USERS.acc_type = PERMISSIONS.acc_type
-        
-    """)
+    """
+    )
     conn = None
     try:
         # read the connection parameters
@@ -120,7 +123,10 @@ def create_tables():
         with open('csv/users.csv', 'r') as f:
             next(f)
             cur.copy_expert("""COPY USERS FROM STDIN WITH (FORMAT CSV)""", f)
-            
+        
+        # create views after data is populated
+        for command in gen_view_commands:
+            cur.execute(command)
         # close communication with the PostgreSQL database server
         cur.close()
         # commit the changes
