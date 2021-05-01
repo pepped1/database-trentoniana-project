@@ -173,7 +173,14 @@
 
 			<img class="search-icon" src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Search_Icon.svg">
 			<input class="search" placeholder="Search" type="text" name="searchterm">
-
+			<label for = "search_by">Search by:</label>
+			{% comment %} dropdown chooses what is being searched {% endcomment %}
+			<select name = "search_by", id="search_by">
+				<option value ="title">Title</option>
+				<option value ="participant">Participant</option>
+				<option value ="place">Place</option>
+				{% comment %} <option value = "transcript">Transcript Content</option> {% endcomment %}
+			</select>
 		</form>
 
 		<!-- Table with results from database -->

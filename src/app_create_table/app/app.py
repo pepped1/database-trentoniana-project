@@ -84,7 +84,7 @@ def connect(query):
     # return the query result from fetchall()
     return rows
 
-def search(searchterm):
+def search(searchterm, search_by):
     """ Connect to the PostgreSQL database server """
     conn = None
     try:
@@ -99,8 +99,29 @@ def search(searchterm):
         # create a cursor
         cur = conn.cursor()
         
+        # select what the query is based on dropdown
+        if search_by == "title":
+            query = "SELECT * FROM MAINVIEW WHERE LOWER(title) LIKE \'%" + searchterm.lower() + "%\';"
+
+        elif search_by == "participant":
+            queryfirstname = "SELECT * FROM MAINVIEW WHERE LOWER(first_name) LIKE \'%" + searchterm.lower() + "%\'"
+            querylastname = "SELECT * FROM MAINVIEW WHERE LOWER(last_name) LIKE \'%" + searchterm.lower() + "%\'"
+            querymiddlename = "SELECT * FROM MAINVIEW WHERE LOWER(middle_name) LIKE \'%" + searchterm.lower() + "%\';"
+            query = queryfirstname + " UNION " + querylastname + " UNION " + querymiddlename
+        
+        elif search_by == "place":
+            querycity = "SELECT * FROM MAINVIEW WHERE LOWER(city) LIKE \'%" + searchterm.lower() + "%\'"
+            querystate = "SELECT * FROM MAINVIEW WHERE LOWER(state) LIKE \'%" + searchterm.lower() + "%\';"
+            query = querycity + " UNION " + querystate
+
+        # elif search_by is "transcript":
+        #     querytrans = "SELECT * FROM ARCHIVES WHERE LOWER(city) LIKE \'%" + searchterm.lower() + "%\';"
+
+        else:
+            return
+
         # execute a query using fetchall()
-        query = "SELECT * FROM ARCHIVES WHERE LOWER(title) LIKE \'%" + searchterm.lower() + "%\';"
+        # query = "SELECT * FROM ARCHIVES WHERE LOWER(title) LIKE \'%" + searchterm.lower() + "%\';"
         cur.execute(query)
         rows = cur.fetchall()
         #colnames = [desc[0] for desc in cur.description]
@@ -128,7 +149,7 @@ def form():
 # handle form data
 @app.route('/form-handler', methods=['POST'])
 def handle_data():
-    rows = search(request.form['searchterm'])
+    rows = search(request.form['searchterm'], request.form['search_by'])
 
     return render_template('my-form.html', rows=rows)
 
