@@ -89,27 +89,34 @@ def create_tables():
         # create table one by one
         for command in commands:
             cur.execute(command)
-        # with open('permissions.csv', 'r') as f:
-        #     next(f) # header row skipped
-        #     cur.copy_from(f, 'PERMISSIONS', sep=',')
-        # with open('csv/archives.csv', 'r') as f:
-        #     next(f) # header row skipped
-        #     cur.copy_expert(f, 'ARCHIVES', sep=',')
+        # the loading in of the data comes from the csv files in the csv folder in the program. there is one csv file per entity.
+        
+        # load in participants from csv
         with open('csv/participants.csv', 'r') as f:
             next(f)
             cur.copy_expert("""COPY PARTICIPANTS FROM STDIN WITH (FORMAT CSV)""", f)  
+        
+        # load in places from csv
         with open('csv/places.csv', 'r') as f:
             next(f)
             cur.copy_expert("""COPY PLACES FROM STDIN WITH (FORMAT CSV)""", f)
+        
+        # load in audio files from csv
         with open('csv/files.csv', 'r') as f:
             next(f)
             cur.copy_expert("""COPY FILES FROM STDIN WITH (FORMAT CSV)""", f)
+        
+        # load in archive data from csv. must happen after the above data is loaded, since it references the above entities in relationships.
         with open('csv/archives.csv', 'r') as f:
             next(f)
             cur.copy_expert("""COPY ARCHIVES FROM STDIN WITH (FORMAT CSV)""", f)
+        
+        # load in permissions, aka types of accounts and what they can do
         with open('csv/permissions.csv', 'r') as f:
             next(f)
             cur.copy_expert("""COPY PERMISSIONS FROM STDIN WITH (FORMAT CSV)""", f)
+        
+        # load in user data
         with open('csv/users.csv', 'r') as f:
             next(f)
             cur.copy_expert("""COPY USERS FROM STDIN WITH (FORMAT CSV)""", f)
