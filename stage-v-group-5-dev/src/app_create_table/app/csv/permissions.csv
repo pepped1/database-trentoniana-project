@@ -1,4 +1,0 @@
-acc_type,can_read,can_write,can_update,can_delete,all_access
-user,true,false,false,false,false
-editor,true,true,true,false,false
-admin,true,true,true,true,true
