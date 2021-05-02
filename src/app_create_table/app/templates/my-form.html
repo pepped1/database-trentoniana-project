@@ -10,13 +10,7 @@
     <style>
     	@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900');
 
-        form {
-            margin: 1%;
-        }
-
-        div {
-            margin: 1% 0;
-        }
+        
 
         body {
         	margin: 0px;
@@ -50,7 +44,7 @@
 	    	border-spacing:0;
 	    	width:60%;
 	    	text-align: right;
-	    	display:table;
+	    	display:table-cell;
 	    	border: 1px solid #ccc;
 	    }
 
@@ -272,7 +266,7 @@
         	width: 200px;
         	margin: 20px;
         	clear: both;
-        	display: block;
+        	display: table-cell;
         	padding: 50px;
         	background-color: #009BFF;
         	border-radius: 4px;
@@ -280,8 +274,12 @@
 
         .card::after {
         	clear: both;
-        	display: block;
+        	display: table-cell;
         	content: "";
+        }
+
+        .wrap {
+        	display:table;
         }
 
 
@@ -321,76 +319,87 @@
 			</select>
 		</form>
 
-		<!-- Checkboxes -->
-		<div class = "card">
-			<div class = "checkbox-container"> 
-				<label class="checkbox-label"> 
-					<div class="checkbox-input-label">Option 1</div>
-					<input type="checkbox">
-					<span class="checkbox-custom"></span>
-				</label>
+		<div class="wrap">
 
-				<label class="checkbox-label">
-					<div class="checkbox-input-label">Option 2</div>
-					<input type="checkbox">
-					<span class="checkbox-custom"></span>
-				</label>
+			<div></div>
 
+			<!-- Checkboxes -->
+			<div class = "card">
+				<div class = "checkbox-container"> 
+					<label class="checkbox-label"> 
+						<div class="checkbox-input-label">Option 1</div>
+						<input type="checkbox">
+						<span class="checkbox-custom"></span>
+					</label>
 
-				<label class="checkbox-label">
-					<div class="checkbox-input-label">Option 3</div>
-					<input type="checkbox">
-					<span class="checkbox-custom"></span>
-				</label>
+					<label class="checkbox-label">
+						<div class="checkbox-input-label">Option 2</div>
+						<input type="checkbox">
+						<span class="checkbox-custom"></span>
+					</label>
 
 
-				<label class="checkbox-label">
-					<div class="checkbox-input-label">Option 4</div>
-					<input type="checkbox">
-					<span class="checkbox-custom"></span>
-				</label>
-
-				<label class="checkbox-label">
-					<div class="checkbox-input-label">Option 5</div>
-					<input type="checkbox">
-					<span class="checkbox-custom"></span>
-				</label>
-
-				<label class="checkbox-label">
-					<div class="checkbox-input-label">Option 6</div>
-					<input type="checkbox">
-					<span class="checkbox-custom"></span>
-				</label>
+					<label class="checkbox-label">
+						<div class="checkbox-input-label">Option 3</div>
+						<input type="checkbox">
+						<span class="checkbox-custom"></span>
+					</label>
 
 
+					<label class="checkbox-label">
+						<div class="checkbox-input-label">Option 4</div>
+						<input type="checkbox">
+						<span class="checkbox-custom"></span>
+					</label>
+
+					<label class="checkbox-label">
+						<div class="checkbox-input-label">Option 5</div>
+						<input type="checkbox">
+						<span class="checkbox-custom"></span>
+					</label>
+
+					<label class="checkbox-label">
+						<div class="checkbox-input-label">Option 6</div>
+						<input type="checkbox">
+						<span class="checkbox-custom"></span>
+					</label>
+
+
+				</div>
 			</div>
+
+			<div></div>
+
+
+			<!-- Table with results from database -->
+		    <table class="hover-table">
+
+		    <tr>
+		    	<th>Title</th>
+		    	<th>Month</th>
+		    	<th>Day</th>
+		    	<th>Year</th>
+		    	<th>First Name</th>
+		    	<th>Middle Name</th>
+		    	<th>Last Name</th>
+		    	<th>City</th>
+		    	<th>State</th>
+		    </tr>
+	        <!-- nested for loops in jinja template -->
+			{%for row in rows%}
+			    <tr>
+			    {%for col in row%}
+			        <td>{{col}}</td>
+			    {%endfor%}
+			    </tr>
+			{%endfor%}
+			</table>
+
+			<div></div>
+
 		</div>
 
-
-
-		<!-- Table with results from database -->
-	    <table class="hover-table">
-
-	    <tr>
-	    	<th>Title</th>
-	    	<th>Month</th>
-	    	<th>Day</th>
-	    	<th>Year</th>
-	    	<th>First Name</th>
-	    	<th>Middle Name</th>
-	    	<th>Last Name</th>
-	    	<th>City</th>
-	    	<th>State</th>
-	    </tr>
-        <!-- nested for loops in jinja template -->
-		{%for row in rows%}
-		    <tr>
-		    {%for col in row%}
-		        <td>{{col}}</td>
-		    {%endfor%}
-		    </tr>
-		{%endfor%}
-		</table>
+	
 
     </body>
 
