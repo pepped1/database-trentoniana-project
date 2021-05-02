@@ -150,6 +150,19 @@
         	background-color:#ddd;
         }
 
+        .check {
+        	display: block;
+        	position: relative;
+        	padding-left: 35px;
+        	margin-bottom: 12px;
+        	font-size: 22px;
+        	cursor: pointer;
+        }
+
+
+
+
+
 
 
     </style>
@@ -182,6 +195,15 @@
 			</select>
 		</form>
 
+		<!-- Checkboxes -->
+		{% for keyword in keywords %}
+		<label class="check">{{keyword}}
+			<input type="checkbox" checked="checked" name="keywords" value = {{keyword.word}}>
+			<span class="checkmark"></span>
+		</label>
+		{%endfor%}
+
+
 		<!-- Table with results from database -->
 	    <table class="hover-table">
 
@@ -200,5 +222,3 @@
    
 
 </html>
-
-
