@@ -96,7 +96,7 @@ def create_tables():
         
         # load in participants from csv
         with open('csv/participants.csv', 'r') as f:
-            next(f)
+            next(f) # skip first line, first line is headers
             cur.copy_expert("""COPY PARTICIPANTS FROM STDIN WITH (FORMAT CSV)""", f)  
         
         # load in places from csv
