@@ -8,6 +8,8 @@
 
     <!-- minimal styling -->
     <style>
+    	@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900');
+
         form {
             margin: 1%;
         }
@@ -18,7 +20,7 @@
 
         body {
         	margin: 0px;
-        	font-family: Arial, Helvetica, sans-serif;
+        	font-family: 'Roboto', sans-serif;
         }
 
         th:tr{
@@ -101,13 +103,13 @@
         }
 
         .search:hover, .search:focus {
-        	border: 1.5px solid #009688;
+        	border: 1.5px solid #009BFF;
         	background-color: white;
         }
 
         .navbar {
         	box-sizing: border-box;
-        	background-color: #ddd;
+        	background-color: #009BFF;
         	overflow:hidden;
         	height: 50px;
         	padding:0px;
@@ -123,6 +125,7 @@
         	margin-left:10px;
         	text-decoration:none;
         	font-size:17px;
+        	color: rgb(255,255,255);
         }
 
         .navbar .login {
@@ -136,82 +139,145 @@
         	font-size:17px;
         	border:none;
         	width:120px;
-        	border-color:#ddd;
+        	border-color:#009BFF;
         }
 
         .navbar .login button {
         	float:right;
         	padding:0px;
-        	background: #ddd;
+        	background: #FFFFFF;
         	border:none;
         }
 
         .navbar .login button:hover {
-        	background-color:#ddd;
+        	background-color:#f1f1f1;
         }
 
 
-        /* checkbox label format */
-        .check {
-        	display: block;
-        	position: relative;
-        	padding-left: 35px;
-        	margin-bottom: 12px;
-        	font-size: 22px;
-        	cursor: pointer;
-        }
-
-        /* hide browser default checkbox */
-        .check input {
+        .checkbox-label input {
         	position: absolute;
         	opacity: 0;
         	cursor: pointer;
-        	height: 0;
-        	width: 0;
         }
 
-        /* Create custom checkbox */
-        .checkmark {
-        	position: absolute;
-        	top: 0;
-        	left: 0;
-        	height: 25px;
-        	width: 25px;
-        	background-color: #eee;
-        }
-
-        /* when hovering change checkbox color */
-        .check:hover input ~ .checkmark {
-        	background-color: #ccc;
-        }
-
-        /* when checked, change checkbox color */
-        .check input:checked ~ .checkmark {
-        	background-color: #2196F3;
-        }
-
-        /* create checkmark */
-        .checkmark:after {
-        	content: "";
-        	position: absolute;
-        	display: none;
-        }
-
-        /* Show checkmark when checked */
-        .check input:checked ~ .checkmark:after {
+        .checkbox-label {
         	display: block;
+        	position: relative;
+        	margin: auto;
+        	cursor: pointer;
+        	font-size: 22px;
+        	line-height: 24px;
+        	height: 24px;
+        	clear: both;
+
+        	padding-bottom: 5px;
+        	padding-top: 10px;
+
+        	padding-left: 35px;
+        	margin-bottom: 12px;
+    
         }
 
-        /* style the checkmark/indicator */
-        .check .checkmark:after {
-        	left: 9px;
-        	top: 5px;
-        	width: 5px;
-        	height: 10px;
-        	border: solid white;
-        	border-width: 0 3px 3px 0;
-        	transform: rotate(45deg);
+
+        .checkbox-label .checkbox-custom {
+        	position: absolute;
+        	top: 0px;
+        	left: 0px;
+        	height: 24px;
+        	width: 24px;
+        	background-color: transparent;
+        	border-radius: 5px;
+        	border: 2px solid #FFFFFF;
+
+        	transition: all 0.3s ease-out;
+        	-webkit-transition: all 0.3s ease-out;
+        	-moz-transition: all 0.3s ease-out;
+        	-ms-transition: all 0.3s ease-out;
+        	-o-transition: all 0.3s ease-out;
         }
+
+        .checkbox-label .checkbox-custom::after {
+        	position: absolute;
+        	content: "";
+        	left: 12px;
+        	top: 12px;
+        	height: 0px;
+        	width: 0px;
+        	border-radius: 5px;
+        	border: solid #009BFF;
+        	border-width: 0 3px 3px 0;
+        	-webkit-transform: rotate(0deg) scale(0);
+        	-ms-transform: rotate(0deg) scale(0);
+        	transform: rotate(0deg) scale(0);
+        	opacity:1;
+
+        	transition: all 0.3s ease-out;
+        	-webkit-transition: all 0.3s ease-out;
+        	-moz-transition: all 0.3s ease-out;
+        	-ms-transition: all 0.3s ease-out;
+        	-o-transition: all 0.3s ease-out;
+        }
+
+        .checkbox-label input:checked ~ .checkbox-custom {
+        	background-color: #FFFFFF;
+        	border-radius: 5px;
+        	-webkit-transform: rotate(0deg) scale(1);
+        	-ms-transform: rotate(0deg) scale(1);
+        	transform: rotate(0deg) scale(1);
+        	opacity:1;
+        	border: 2px solid #FFFFFF;
+        }
+
+        .checkbox-label input:checked ~ .checkbox-custom::after {
+        	-webkit-transform: rotate(45deg) scale(1);
+        	-ms-transform: rotate(45deg) scale(1);
+        	transform: rotate(45deg) scale(1);
+        	opacity:1;
+        	left: 8px;
+        	top: 3px;
+        	width: 6px;
+        	height: 12px;
+        	border: solid #0098FF;
+        	border-width: 0 2px 2px 0;
+        	background-color: transparent;
+        	border-radius: 0;
+        }
+
+        .checkbox-input-label {
+        	display: inline-block;
+        	text-align: right;
+        	clear: both;
+        	padding: 0px;
+        	font-size: 16px;
+        	color: rgba(255,255,255);
+        	font-weight: 4px;
+
+        }
+
+        .card .checkbox-container {
+        	float: left;
+        	width: 100%;
+        	box-sizing: border-box;
+        	text-align: center;
+        	padding: 0px;
+        }
+
+        .card {
+        	width: 200px;
+        	margin: 20px;
+        	clear: both;
+        	display: block;
+        	padding: 50px;
+        	background-color: #009BFF;
+        	border-radius: 4px;
+        }
+
+        .card::after {
+        	clear: both;
+        	display: block;
+        	content: "";
+        }
+
 
 
 
@@ -250,25 +316,50 @@
 		</form>
 
 		<!-- Checkboxes -->
-		<label class="check">Option 1
-			<input type="checkbox" checked="checked">
-			<span class="checkmark"></span>
-		</label>
+		<div class = "card">
+			<div class = "checkbox-container"> 
+				<label class="checkbox-label"> 
+					<div class="checkbox-input-label">Option 1</div>
+					<input type="checkbox">
+					<span class="checkbox-custom"></span>
+				</label>
 
-		<label class="check">Option 2
-			<input type="checkbox">
-			<span class="checkmark"></span>
-		</label>
+				<label class="checkbox-label">
+					<div class="checkbox-input-label">Option 2</div>
+					<input type="checkbox">
+					<span class="checkbox-custom"></span>
+				</label>
 
-		<label class="check">Option 3
-			<input type="checkbox">
-			<span class="checkmark"></span>
-		</label>
 
-		<label class="check">Option 4
-			<input type="checkbox">
-			<span class="checkmark"></span>
-		</label>
+				<label class="checkbox-label">
+					<div class="checkbox-input-label">Option 3</div>
+					<input type="checkbox">
+					<span class="checkbox-custom"></span>
+				</label>
+
+
+				<label class="checkbox-label">
+					<div class="checkbox-input-label">Option 4</div>
+					<input type="checkbox">
+					<span class="checkbox-custom"></span>
+				</label>
+
+				<label class="checkbox-label">
+					<div class="checkbox-input-label">Option 5</div>
+					<input type="checkbox">
+					<span class="checkbox-custom"></span>
+				</label>
+
+				<label class="checkbox-label">
+					<div class="checkbox-input-label">Option 6</div>
+					<input type="checkbox">
+					<span class="checkbox-custom"></span>
+				</label>
+
+
+			</div>
+		</div>
+
 
 
 		<!-- Table with results from database -->
