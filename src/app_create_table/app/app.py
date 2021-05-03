@@ -83,27 +83,121 @@ def connect(query):
             print('Database connection closed.')
     # return the query result from fetchall()
     return rows
- 
-# app.py
 
+def search(searchterm, search_by, keywords):
+    """ Connect to the PostgreSQL database server """
+    conn = None
+    try:
+        # read connection parameters from database.ini
+        params = config()
+ 
+        # connect to the PostgreSQL server
+        print('Connecting to the %s database...' % (params['database']))
+        conn = psycopg2.connect(**params)
+        print('Connected.')
+      
+        # create a cursor
+        cur = conn.cursor()
+        
+        # select what the query is based on dropdown
+        if search_by == "title":
+            query += "SELECT * FROM SEARCHVIEW WHERE LOWER(title) LIKE \'%" + searchterm.lower() + "%\';"
+
+        elif search_by == "participant":
+            queryfirstname = "SELECT * FROM SEARCHVIEW WHERE LOWER(first_name) LIKE \'%" + searchterm.lower() + "%\'"
+            querylastname = "SELECT * FROM SEARCHVIEW WHERE LOWER(last_name) LIKE \'%" + searchterm.lower() + "%\'"
+            querymiddlename = "SELECT * FROM SEARCHVIEW WHERE LOWER(middle_name) LIKE \'%" + searchterm.lower() + "%\';"
+            query += queryfirstname + " UNION " + querylastname + " UNION " + querymiddlename
+        
+        elif search_by == "place":
+            querycity = "SELECT * FROM SEARCHVIEW WHERE LOWER(city) LIKE \'%" + searchterm.lower() + "%\'"
+            querystate = "SELECT * FROM SEARCHVIEW WHERE LOWER(state) LIKE \'%" + searchterm.lower() + "%\';"
+            query += querycity + " UNION " + querystate
+
+        # elif search_by is "transcript":
+        #     querytrans = "SELECT * FROM ARCHIVES WHERE LOWER(city) LIKE \'%" + searchterm.lower() + "%\';"
+
+        else:
+            pass
+
+        # execute a query using fetchall()
+        # query = "SELECT * FROM ARCHIVES WHERE LOWER(title) LIKE \'%" + searchterm.lower() + "%\';"
+        # cur.execute(query)
+        for keyword in keywords:
+            keyquery = " SELECT * FROM SEARCH_QUER WHERE word=" + keyword +";"
+            query += keyquery
+        
+        cur.execute(query)
+        rows = cur.fetchall()
+        #colnames = [desc[0] for desc in cur.description]
+
+       # close the communication with the PostgreSQL
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+            print('Database connection closed.')
+    # return the query result from fetchall()
+    return rows
+ 
+def get_keywords():
+    """ Connect to the PostgreSQL database server """
+    conn = None
+    try:
+        # read connection parameters from database.ini
+        params = config()
+ 
+        # connect to the PostgreSQL server
+        print('Connecting to the %s database...' % (params['database']))
+        conn = psycopg2.connect(**params)
+        print('Connected.')
+      
+        # create a cursor
+        cur = conn.cursor()
+        
+        # execute a query using fetchall()
+        cur.execute("""SELECT word FROM KEYWORDS""")
+        # keyword_query_result = cur.fetchall()
+        fetched_keywords = cur.fetchall()
+        keywords = list(fetched_keywords)
+        keywords = [i[0] for i in keywords]
+        #colnames = [desc[0] for desc in cur.description]
+       # close the communication with the PostgreSQL
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+            print('Database connection closed.')
+    # return the query result from fetchall()
+    
+    return keywords
+# app.py
 app = Flask(__name__)
 
 
 # serve form web page
 @app.route("/")
 def form():
-    return render_template('my-form.html')
+    # get keywords
+    keywords = get_keywords()
+    return render_template('my-form.html', keywords=keywords)
 
 # handle form data
 @app.route('/form-handler', methods=['POST'])
 def handle_data():
-    rows = connect(request.form['query'])
+    
+    rows = search(request.form['searchterm'], request.form['search_by'], request.form.getlist('keywords'))
 
     return render_template('my-form.html', rows=rows)
 
 #handle login data
-@app.route('/login-handler', methods='POST')
-def handle_login():
+# @app.route('/login-handler', methods='POST')
+# def handle_login():
+#     return
 
 if __name__ == '__main__':
     app.run(debug = True)
