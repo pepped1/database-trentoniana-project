@@ -117,10 +117,16 @@ def search(searchterm, search_by, sort_by):
         else:
             pass
 
-        if sort_by == "newest-to-oldest":
+        if sort_by == "default":
+            query += ";"
+        elif sort_by == "newest-to-oldest":
             query += " ORDER BY INTERVIEW_DATE DESC;"
         elif sort_by == "oldest-to-newest":
             query += " ORDER BY INTERVIEW_DATE ASC;"
+        elif sort_by == "a-z":
+            query += " ORDER BY TITLE ASC;"
+        elif sort_by == "z-a":
+            query += " ORDER BY TITLE DESC;"
         else:
             pass
 
