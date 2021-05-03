@@ -84,9 +84,10 @@ def connect(query):
     # return the query result from fetchall()
     return rows
 
-def search(searchterm):
+def search(searchterm, search_by):
     """ Connect to the PostgreSQL database server """
     conn = None
+    query = ""
     try:
         # read connection parameters from database.ini
         params = config()
@@ -99,8 +100,28 @@ def search(searchterm):
         # create a cursor
         cur = conn.cursor()
         
+        # select what the query is based on dropdown
+        if search_by == "title":
+            query += "SELECT * FROM SEARCHVIEW WHERE LOWER(title) LIKE \'%" + searchterm.lower() + "%\';"
+
+        elif search_by == "participant":
+            queryfirstname = "SELECT * FROM SEARCHVIEW WHERE LOWER(first_name) LIKE \'%" + searchterm.lower() + "%\'"
+            querylastname = "SELECT * FROM SEARCHVIEW WHERE LOWER(last_name) LIKE \'%" + searchterm.lower() + "%\'"
+            querymiddlename = "SELECT * FROM SEARCHVIEW WHERE LOWER(middle_name) LIKE \'%" + searchterm.lower() + "%\';"
+            query += queryfirstname + " UNION " + querylastname + " UNION " + querymiddlename
+        
+        elif search_by == "place":
+            querycity = "SELECT * FROM SEARCHVIEW WHERE LOWER(city) LIKE \'%" + searchterm.lower() + "%\'"
+            querystate = "SELECT * FROM SEARCHVIEW WHERE LOWER(state) LIKE \'%" + searchterm.lower() + "%\';"
+            query += querycity + " UNION " + querystate
+
+        else:
+            pass
+
         # execute a query using fetchall()
-        query = "SELECT * FROM ARCHIVES WHERE LOWER(title) LIKE \'%" + searchterm.lower() + "%\';"
+        # query = "SELECT * FROM ARCHIVES WHERE LOWER(title) LIKE \'%" + searchterm.lower() + "%\';"
+        # cur.execute(query)
+        
         cur.execute(query)
         rows = cur.fetchall()
         #colnames = [desc[0] for desc in cur.description]
@@ -123,12 +144,12 @@ app = Flask(__name__)
 # serve form web page
 @app.route("/")
 def form():
+    # handle form data
     return render_template('my-form.html')
 
-# handle form data
 @app.route('/form-handler', methods=['POST'])
 def handle_data():
-    rows = search(request.form['searchterm'])
+    rows = search(request.form['searchterm'], request.form['search_by'])
     return render_template('my-form.html', rows=rows)
 
 @app.route("/archives/<id>")

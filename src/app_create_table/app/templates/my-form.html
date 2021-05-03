@@ -10,6 +10,8 @@
     <style>
     	@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900');
 
+        
+
         body {
         	margin: 0px;
         	font-family: 'Roboto', sans-serif;
@@ -20,7 +22,6 @@
         	color: #FFFFFF;
         	border: 1px solid white;
         	padding: 5px;
-        	width: 100%;
         }
 
         th:tr{
@@ -47,16 +48,13 @@
 	    }
 
 	    .hover-table{
-	    	
+	    	margin-right: 20px;
+	    	margin-left: 20px;
 	    	border-collapse:collapse;
 	    	border-spacing:0;
-	    	width:70%;
+	    	width:60%;
 	    	text-align: right;
 	    	display:table-cell;
-	    	position:relative;
-	    	left: 20px;
-	    	bottom: 4px;
-
 	    }
 
 	    .hover-table tr{
@@ -257,11 +255,9 @@
 
         .checkbox-input-label {
         	display: inline-block;
-        	text-align: left;
-        	float: left;
+        	text-align: right;
         	clear: both;
-        	position: relative;
-        	bottom:8px;
+        	padding: 0px;
         	font-size: 16px;
         	color: rgba(255,255,255);
         	font-weight: 4px;
@@ -294,13 +290,10 @@
 
         .wrap {
         	display:table;
-        	margin: 20px;
-        	text-align: right;
         }
 
         .space {
         	margin: 10px;
-        	display:table-cell;
         }
 
 
@@ -389,7 +382,7 @@
 				</div>
 			</div>
 
-			<div class="space"></div>
+			<div space="space"></div>
 
 
 			<!-- Table with results from database -->
@@ -397,12 +390,12 @@
 
 	        <tr>
 		    	<th>Title</th>
-				<th>Date of Recording</th>
+			<th>Date of Recording</th>
 		    </tr>
 	        <!-- nested for loops in jinja template -->
 			{%for row in rows%}
 			    <tr>
-			    <td>{{row[1]}}</td>
+			    <td><a href="/archives/{{row[0]}}">{{row[1]}}</a></td>
 			    <td>{{row[2]}}</td>
 			    </tr>
 			{%endfor%}
