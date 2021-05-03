@@ -187,16 +187,22 @@
 	    <tr>
     	    <td>{{row1[1]}}</td>
             <td>{{row1[2]}}</td>
-            <td>{{row1[11]}}</td>
+            <td><audio controls>
+                 <source src = "{{ row1[11] }}" >
+             </audio></td>
             <td>{{row1[9]}}</td>
             <td>{{row1[3]}}</td>
             <td>{{row1[4]}}</td>
             <td>{{row1[5]}}</td>
             <td>{{row1[10]}}</td>
             
+            
 	    </tr>
+        
 	{%endfor%}
+    
 	</table>
+    
     </body>
 
 </html>
