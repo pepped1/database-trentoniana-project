@@ -129,8 +129,13 @@ def form():
 @app.route('/form-handler', methods=['POST'])
 def handle_data():
     rows = search(request.form['searchterm'])
-
     return render_template('my-form.html', rows=rows)
+
+@app.route("/archives/<id>")
+def show(id):
+    query = "SELECT * FROM MAINVIEW WHERE AID = " + id + ";"
+    row = connect(query)
+    return render_template('my-result.html', row = row)
 
 #handle login data
 # @app.route('/login-handler', methods='POST')

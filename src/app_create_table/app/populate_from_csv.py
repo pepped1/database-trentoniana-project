@@ -17,9 +17,7 @@ def create_tables():
     CREATE TABLE ARCHIVES (
 	AID SERIAL PRIMARY KEY,
 	title varchar(64) NOT NULL,
-	month SMALLINT,
-	day SMALLINT,
-	year SMALLINT,
+	interview_date DATE,
 	transcript text,
 	description text,
 	sound_file text,
@@ -32,6 +30,12 @@ def create_tables():
 	first_name varchar(12),
 	middle_name varchar(12),
 	last_name varchar(20)
+    );
+    """,
+    """
+    CREATE TABLE KEYWORDS (
+        KID SERIAL PRIMARY KEY,
+        word varchar(16) NOT NULL
     );
     """,
     """
@@ -70,7 +74,7 @@ def create_tables():
     """,
     """
     CREATE VIEW SEARCHVIEW AS
-    SELECT ARCHIVES.AID, ARCHIVES.title, ARCHIVES.month, ARCHIVES.day, ARCHIVES.year, PARTICIPANTS.first_name, PARTICIPANTS.middle_name, PARTICIPANTS.last_name, PLACES.city, PLACES.state, KEYVIEW.word
+    SELECT ARCHIVES.AID, ARCHIVES.title, ARCHIVES.interview_date, PARTICIPANTS.first_name, PARTICIPANTS.middle_name, PARTICIPANTS.last_name, PLACES.city, PLACES.state, KEYVIEW.word
     FROM ARCHIVES 
     JOIN PARTICIPANTS ON ARCHIVES.AID = PARTICIPANTS.AID
     JOIN KEYVIEW ON ARCHIVES.AID = KEYVIEW.AID
@@ -101,27 +105,31 @@ def create_tables():
         
         # the loading in of the data comes from the csv files in the csv folder in the program. there is one csv file per entity.
         
-        # load in participants from csv
-        with open('csv/participants.csv', 'r') as f:
-            next(f) # skip first line, first line is headers
-            cur.copy_expert("""COPY PARTICIPANTS FROM STDIN WITH (FORMAT CSV)""", f)  
-        
         # load in places from csv
         with open('csv/places.csv', 'r') as f:
             next(f)
             cur.copy_expert("""COPY PLACES FROM STDIN WITH (FORMAT CSV)""", f)
         
-        # load in audio files from csv
-        with open('csv/keywords.csv', 'r') as f:
-            next(f)
-            cur.copy_expert("""COPY KEYWORDS FROM STDIN WITH (FORMAT CSV)""", f)
-        
-        # load in archive data from csv. must happen after the above data is loaded, since it references the above entities in relationships.
+        # load in archive data from csv
         with open('csv/archives.csv', 'r') as f:
             next(f)
             cur.copy_expert("""COPY ARCHIVES FROM STDIN WITH (FORMAT CSV)""", f)
         
-        # load in permissions, aka types of accounts and what they can do
+        # load in participants from csv
+        with open('csv/participants.csv', 'r') as f:
+            next(f) # skip first line, first line is headers
+            cur.copy_expert("""COPY PARTICIPANTS FROM STDIN WITH (FORMAT CSV)""", f)  
+        
+        # load in keywords from csv
+        with open('csv/keywords.csv', 'r') as f:
+            next(f)
+            cur.copy_expert("""COPY KEYWORDS FROM STDIN WITH (FORMAT CSV)""", f)
+        
+        # load in association for archives and keywords
+        with open('csv/archive_keywords.csv', 'r') as f:
+            next(f)
+            cur.copy_expert("""COPY ARCHIVE_KEYWORD FROM STDIN WITH (FORMAT CSV)""", f)
+        
         with open('csv/permissions.csv', 'r') as f:
             next(f)
             cur.copy_expert("""COPY PERMISSIONS FROM STDIN WITH (FORMAT CSV)""", f)
@@ -130,12 +138,6 @@ def create_tables():
         with open('csv/users.csv', 'r') as f:
             next(f)
             cur.copy_expert("""COPY USERS FROM STDIN WITH (FORMAT CSV)""", f)
-        
-        # load in association for archives and keywords
-        with open('csv/archive_keywords.csv', 'r') as f:
-            next(f)
-            cur.copy_expert("""COPY ARCHIVE_KEYWORD FROM STDIN WITH (FORMAT CSV)""", f)
-        
         
         # create views after data is populated
         for command in gen_view_commands:
