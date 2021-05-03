@@ -52,7 +52,7 @@ https://www.geeksforgeeks.org/python-using-for-loop-in-flask/
 import psycopg2
 from config import config
 from flask import Flask, render_template, request
- 
+
 def connect(query):
     """ Connect to the PostgreSQL database server """
     conn = None
@@ -84,7 +84,7 @@ def connect(query):
     # return the query result from fetchall()
     return rows
 
-def search(searchterm, search_by):
+def search(searchterm, search_by, sort_by):
     """ Connect to the PostgreSQL database server """
     conn = None
     query = ""
@@ -102,20 +102,28 @@ def search(searchterm, search_by):
         
         # select what the query is based on dropdown
         if search_by == "title":
-            query += "SELECT distinct AID, TITLE, INTERVIEW_DATE FROM SEARCHVIEW WHERE LOWER(title) LIKE \'%" + searchterm.lower() + "%\' order by INTERVIEW_DATE desc;"
+            query += "SELECT distinct AID, TITLE, INTERVIEW_DATE FROM SEARCHVIEW WHERE LOWER(title) LIKE \'%" + searchterm.lower()
         elif search_by == "participant":
             queryfirstname = "SELECT distinct AID, TITLE, INTERVIEW_DATE FROM SEARCHVIEW WHERE LOWER(first_name) LIKE \'%" + searchterm.lower() + "%\'"
             querylastname = "SELECT distinct AID, TITLE, INTERVIEW_DATE FROM SEARCHVIEW WHERE LOWER(last_name) LIKE \'%" + searchterm.lower() + "%\'"
             querymiddlename = "SELECT distinct AID, TITLE, INTERVIEW_DATE FROM SEARCHVIEW WHERE LOWER(middle_name) LIKE \'%" + searchterm.lower() + "%\'"
-            query += queryfirstname + " UNION " + querylastname + " UNION " + querymiddlename +  " order by INTERVIEW_DATE desc;"
+            query += queryfirstname + " UNION " + querylastname + " UNION " + querymiddlename
         
         elif search_by == "place":
             querycity = "SELECT distinct AID, TITLE, INTERVIEW_DATE FROM SEARCHVIEW WHERE LOWER(city) LIKE \'%" + searchterm.lower() + "%\'"
             querystate = "SELECT distinct AID, TITLE, INTERVIEW_DATE FROM SEARCHVIEW WHERE LOWER(state) LIKE \'%" + searchterm.lower() + "%\'"
-            query += querycity + " UNION " + querystate  + " order by INTERVIEW_DATE desc; "
+            query += querycity + " UNION " + querystate
 
         else:
             pass
+
+        if sort_by == "newest-to-oldest":
+            query += " ORDER BY INTERVIEW_DATE DESC;"
+        elif sort_by == "oldest-to-newest":
+            query += " ORDER BY INTERVIEW_DATE ASC;"
+        else:
+            pass
+
 
         # execute a query using fetchall()
         # query = "SELECT * FROM ARCHIVES WHERE LOWER(title) LIKE \'%" + searchterm.lower() + "%\';"
@@ -148,7 +156,7 @@ def form():
 
 @app.route('/form-handler', methods=['POST'])
 def handle_data():
-    rows = search(request.form['searchterm'], request.form['search_by'])
+    rows = search(request.form['searchterm'], request.form['search_by'], request.form['sort_by'])
     return render_template('my-form.html', rows=rows)
 
 @app.route("/archives/<id>")
