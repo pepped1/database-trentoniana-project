@@ -133,7 +133,7 @@ def handle_data():
 
 @app.route("/archives/<id>")
 def show(id):
-    query = "SELECT * FROM MAINVIEW WHERE AID = " + id + ";"
+    query = "SELECT * FROM MAINVIEW WHERE AID = " + id + "LIMIT 1;"
     row = connect(query)
     return render_template('my-result.html', row = row)
 
