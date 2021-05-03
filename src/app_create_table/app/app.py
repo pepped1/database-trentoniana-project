@@ -102,18 +102,17 @@ def search(searchterm, search_by):
         
         # select what the query is based on dropdown
         if search_by == "title":
-            query += "SELECT distinct AID, TITLE, INTERVIEW_DATE FROM SEARCHVIEW WHERE LOWER(title) LIKE \'%" + searchterm.lower() + "%\';"
-
+            query += "SELECT distinct AID, TITLE, INTERVIEW_DATE FROM SEARCHVIEW WHERE LOWER(title) LIKE \'%" + searchterm.lower() + "%\' order by INTERVIEW_DATE desc;"
         elif search_by == "participant":
             queryfirstname = "SELECT distinct AID, TITLE, INTERVIEW_DATE FROM SEARCHVIEW WHERE LOWER(first_name) LIKE \'%" + searchterm.lower() + "%\'"
             querylastname = "SELECT distinct AID, TITLE, INTERVIEW_DATE FROM SEARCHVIEW WHERE LOWER(last_name) LIKE \'%" + searchterm.lower() + "%\'"
-            querymiddlename = "SELECT distinct AID, TITLE, INTERVIEW_DATE FROM SEARCHVIEW WHERE LOWER(middle_name) LIKE \'%" + searchterm.lower() + "%\';"
-            query += queryfirstname + " UNION " + querylastname + " UNION " + querymiddlename
+            querymiddlename = "SELECT distinct AID, TITLE, INTERVIEW_DATE FROM SEARCHVIEW WHERE LOWER(middle_name) LIKE \'%" + searchterm.lower() + "%\'"
+            query += queryfirstname + " UNION " + querylastname + " UNION " + querymiddlename +  " order by INTERVIEW_DATE desc;"
         
         elif search_by == "place":
             querycity = "SELECT distinct AID, TITLE, INTERVIEW_DATE FROM SEARCHVIEW WHERE LOWER(city) LIKE \'%" + searchterm.lower() + "%\'"
-            querystate = "SELECT distinct AID, TITLE, INTERVIEW_DATE FROM SEARCHVIEW WHERE LOWER(state) LIKE \'%" + searchterm.lower() + "%\';"
-            query += querycity + " UNION " + querystate
+            querystate = "SELECT distinct AID, TITLE, INTERVIEW_DATE FROM SEARCHVIEW WHERE LOWER(state) LIKE \'%" + searchterm.lower() + "%\'"
+            query += querycity + " UNION " + querystate  + " order by INTERVIEW_DATE desc; "
 
         else:
             pass
