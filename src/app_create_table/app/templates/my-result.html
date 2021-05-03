@@ -1,33 +1,194 @@
 <!-- /templates/my-result.html-->
 
+<!DOCTYPE html>
 <html>
+
     <head>
-        <title>Trentoniana Result Table</title>
+        <title>Trentoniana Audio Files App</title>
+        <meta name="description" 
+            content="A database for Trentoniana Library's Audio Files" />
+        <meta http-equiv="author"
+            content="CSC315-03 Team 5: Alyssa, Dean, and Sarah" />
+        <meta http-equiv="pragma"
+            content="no-cache" />
     </head>
 
-    <!-- Adding some style to table (OPTIONAL) -->
-    <style type="text/css">
+    <!-- CSS styling for document -->
+    <style>
 
-    th:tr{
-        color: blue;
-    }
-    tr:nth-of-type(2n){
-        border: 1px solid black;
-        background-color: rgba(150, 150, 150, 0.5);
-    }
+    /* import open sans font */
+        @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
-    td{
-        padding: 8px 8px;
-        border: 1px solid black;
-    }
+        body {
+            margin:0px;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        /* table heading formatting */
+        th {
+            background-color: #009BFF;
+            color: #FFFFFF;
+            border: 1px solid white;
+            padding: 5px;
+            width: 600px;
+            border-radius: 5px 5px 0px 0px;
+        }
+        
+        /* white separation lines for table */
+        td{
+            padding: 8px 8px;
+            border: 1px solid white; 
+        }
+
+        /* link general formatting */
+        a{
+           color: #009BFF; 
+        }
+
+        /* table general formatting */
+        .hover-table{
+            border-collapse:collapse;
+            border-spacing:0;
+            width:600px;
+            text-align: right;
+            display:table-cell;
+            border-radius: 5px 5px 0px 0px;
+
+            /* fixes table positioning issue */
+            position:relative;
+            left: 50px;
+            right:20px;
+            bottom: 18px;           
+        }
+
+        /* shade even table rows a light grey color and borders white */
+        .hover-table tr:nth-child(even){
+            border: 1px solid white;
+            background-color: #f1f1f1;
+        }
+
+        /* table entry text formatting */
+        .hover-table td, .hover-table th{
+            padding:8px 8px;
+            display: table-cell;
+            text-align:left;
+            vertical-align:top;
+        }
+
+        /* when hovering over an entry, make it dark grey */
+        .hover-table tbody tr:hover, .hover-table li:hover{
+            background-color:#ddd;
+        }
+
+        /* search spacing formatting*/
+        .search-spacing {
+            margin-top: 30px;
+            margin-bottom: 30px;
+            position: relative;
+            display:block;
+            text-align: center;
+            min-width: 100px;
+        }
+
+        /* magnifying glass search icon image formatting */
+        .search-icon {
+            position: relative;
+            top: 6px;
+            left: 28px;
+            width: 20px;
+        }
+
+        /* search bar general formatting */
+        .search {
+            border: 1px solid #009BFF;
+            border-radius: 5px;
+            height: 40px;
+            width: 60%;
+            padding:2px 23px 2px 30px;
+            outline: 0px;
+            background-color: white;
+            margin-right: 20px;
+            margin-left: auto;
+        }
+
+        /* search bar is grey when hovered over */
+        .search:hover, .search:focus {
+            border: 1.5px solid grey;
+            background-color: #f5f5f5;
+        }
+
+        /* navbar general formatting */
+        .navbar {
+            box-sizing: border-box;
+            background-color: #009BFF;
+            overflow:hidden;
+            height: 50px;
+            padding:0px;
+            margin:0px;
+        }
+
+        /* h3 text formatting for navbar */
+        .navbar h3 {
+            float: left;
+            display:block;
+            color:black;
+            text-align:center;
+            padding: 0px;
+            margin-left:10px;
+            text-decoration:none;
+            font-size:17px;
+            color: rgb(255,255,255);
+            position: relative;
+            bottom: 5px;
+        }
+
+        /* login general formatting */
+        .login {
+            float:right;
+            margin-left: 20px;
+            position: relative;
+            top: 7px;
+            right: 10px;
+        }
+
     </style>
 
     <body>
+
+        <!-- Navigation Bar with Login -->
+        <div class ="navbar">
+            <h3>Trentoniana Audio Files App</h3>
+
+            <div class="login">
+                <form action="/login-handler" method="POST">
+                    <input type="text" placeholder="Username" name="username">
+                    <input type="text" placeholder="Password" name="password">
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+
+        </div>
+
 	<table>
         <!-- nested for loops in jinja template -->
 	{%for row1 in row%}
 	    <tr>
-	    <td>{{row1}}</td>
+    	    <td>{{row1[1]}}</td>
+            <td>{{row1[2]}}</td>
+            <td>{{row1[3]}}</td>
+            <td>{{row1[4]}}</td>
+            <td>{{row1[5]}}</td>
+            <td>{{row1[6]}}</td>
+            <td>{{row1[7]}}</td>
+            <td>{{row1[8]}}</td>
+            <td>{{row1[9]}}</td>
+            <td>{{row1[10]}}</td>
+            <td>{{row1[11]}}</td>
+            <td>{{row1[12]}}</td>
+            <td>{{row1[13]}}</td>
+            <td>{{row1[14]}}</td>
+            <td>{{row1[15]}}</td>
+            <td>{{row1[16]}}</td>
 	    </tr>
 	{%endfor%}
 	</table>
