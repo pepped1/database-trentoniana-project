@@ -102,7 +102,7 @@ def search(searchterm, search_by, sort_by):
         
         # select what the query is based on dropdown
         if search_by == "title":
-            query += "SELECT distinct AID, TITLE, INTERVIEW_DATE FROM SEARCHVIEW WHERE LOWER(title) LIKE \'%" + searchterm.lower()
+            query += "SELECT distinct AID, TITLE, INTERVIEW_DATE FROM SEARCHVIEW WHERE LOWER(title) LIKE \'%" + searchterm.lower() + "%\'"
         elif search_by == "participant":
             queryfirstname = "SELECT distinct AID, TITLE, INTERVIEW_DATE FROM SEARCHVIEW WHERE LOWER(first_name) LIKE \'%" + searchterm.lower() + "%\'"
             querylastname = "SELECT distinct AID, TITLE, INTERVIEW_DATE FROM SEARCHVIEW WHERE LOWER(last_name) LIKE \'%" + searchterm.lower() + "%\'"
