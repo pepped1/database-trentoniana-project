@@ -48,9 +48,8 @@
 	    }
 
 	    .hover-table{
-	    	margin-top: 30px;
 	    	margin-right: 20px;
-	    	margin-left: auto;
+	    	margin-left: 20px;
 	    	border-collapse:collapse;
 	    	border-spacing:0;
 	    	width:60%;
@@ -86,10 +85,11 @@
 	    }
 
         .wrapper {
-        	margin-top: 20px;
+        	margin-top: 30px;
+        	margin-bottom: 30px;
         	position: relative;
         	display:block;
-        	text-align: right;
+        	text-align: center;
         	min-width: 100px;
         }
 
@@ -292,6 +292,10 @@
         	display:table;
         }
 
+        .space {
+        	margin: 10px;
+        }
+
 
 
 
@@ -331,7 +335,7 @@
 
 		<div class="wrap">
 
-			<div></div>
+			<div class="space"></div>
 
 			<!-- Checkboxes -->
 			<div class = "card">
@@ -378,12 +382,12 @@
 				</div>
 			</div>
 
-			<div></div>
+			<div space="space"></div>
 
 
 			<!-- Table with results from database -->
 		    <table class="hover-table">
-		    	
+
 	        <tr>
 		    	<th>Title</th>
 			<th>Date of Recording</th>
@@ -397,7 +401,7 @@
 			{%endfor%}
 			</table>
 
-			<div></div>
+			<div class="space"></div>
 
 		</div>
 
