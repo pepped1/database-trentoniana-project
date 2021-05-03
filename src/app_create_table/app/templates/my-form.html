@@ -10,8 +10,6 @@
     <style>
     	@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900');
 
-        
-
         body {
         	margin: 0px;
         	font-family: 'Roboto', sans-serif;
@@ -22,6 +20,7 @@
         	color: #FFFFFF;
         	border: 1px solid white;
         	padding: 5px;
+        	width: 100%;
         }
 
         th:tr{
@@ -48,13 +47,16 @@
 	    }
 
 	    .hover-table{
-	    	margin-right: 20px;
-	    	margin-left: 20px;
+	    	
 	    	border-collapse:collapse;
 	    	border-spacing:0;
-	    	width:60%;
+	    	width:70%;
 	    	text-align: right;
 	    	display:table-cell;
+	    	position:relative;
+	    	left: 20px;
+	    	bottom: 4px;
+
 	    }
 
 	    .hover-table tr{
@@ -255,9 +257,11 @@
 
         .checkbox-input-label {
         	display: inline-block;
-        	text-align: right;
+        	text-align: left;
+        	float: left;
         	clear: both;
-        	padding: 0px;
+        	position: relative;
+        	bottom:8px;
         	font-size: 16px;
         	color: rgba(255,255,255);
         	font-weight: 4px;
@@ -290,10 +294,13 @@
 
         .wrap {
         	display:table;
+        	margin: 20px;
+        	text-align: right;
         }
 
         .space {
         	margin: 10px;
+        	display:table-cell;
         }
 
 
@@ -382,7 +389,7 @@
 				</div>
 			</div>
 
-			<div space="space"></div>
+			<div class="space"></div>
 
 
 			<!-- Table with results from database -->
@@ -390,7 +397,7 @@
 
 	        <tr>
 		    	<th>Title</th>
-			<th>Date of Recording</th>
+				<th>Date of Recording</th>
 		    </tr>
 	        <!-- nested for loops in jinja template -->
 			{%for row in rows%}

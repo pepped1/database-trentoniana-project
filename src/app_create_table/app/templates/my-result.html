@@ -25,10 +25,9 @@
     <body>
 	<table>
         <!-- nested for loops in jinja template -->
-	{%for row in rows%}
+	{%for row1 in row%}
 	    <tr>
-	    <td>{{row[1]}}</td>
-	    <td>{{row[2]}}</td>
+	    <td>{{row1}}</td>
 	    </tr>
 	{%endfor%}
 	</table>
