@@ -8,42 +8,53 @@
 
     <!-- minimal styling -->
     <style>
-        form {
-            margin: 1%;
-        }
+    	@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900');
 
-        div {
-            margin: 1% 0;
-        }
+        
 
         body {
         	margin: 0px;
-        	font-family: Arial, Helvetica, sans-serif;
+        	font-family: 'Roboto', sans-serif;
+        }
+
+        th {
+        	background-color: #009BFF;
+        	color: #FFFFFF;
+        	border: 1px solid white;
+        	padding: 5px;
         }
 
         th:tr{
-        color: blue;
+        	color: blue;
 	    }
+
 	    tr:nth-of-type(2n){
-	        border: 1px solid grey;
+	        border: 1px solid white;
 	        background-color: #f5f5f5;
+	    }
+
+	    tr:nth-of-type(2n+3){
+	    	border: 1px solid grey;
+	    	background-color: #FFFFFF;
+	    }
+
+	    tr {
+	    	padding: 5px;
 	    }
 
 	    td{
 	        padding: 8px 8px;
-	        border: 1px solid grey; 
+	        border: 1px solid white; 
 	    }
 
 	    .hover-table{
-	    	margin-top: 30px;
 	    	margin-right: 20px;
-	    	margin-left: auto;
+	    	margin-left: 20px;
 	    	border-collapse:collapse;
 	    	border-spacing:0;
 	    	width:60%;
 	    	text-align: right;
-	    	display:table;
-	    	border: 1px solid #ccc;
+	    	display:table-cell;
 	    }
 
 	    .hover-table tr{
@@ -51,7 +62,7 @@
 	    }
 
 	    .hover-table tr:nth-child(odd){
-	    	background-color: #fff;
+	    	background-color: #FFFFFF;
 	    }
 
 	    .hover-table tr:nth-child(even){
@@ -74,10 +85,11 @@
 	    }
 
         .wrapper {
-        	margin-top: 20px;
+        	margin-top: 30px;
+        	margin-bottom: 30px;
         	position: relative;
         	display:block;
-        	text-align: right;
+        	text-align: center;
         	min-width: 100px;
         }
 
@@ -101,13 +113,13 @@
         }
 
         .search:hover, .search:focus {
-        	border: 1.5px solid #009688;
+        	border: 1.5px solid #009BFF;
         	background-color: white;
         }
 
         .navbar {
         	box-sizing: border-box;
-        	background-color: #ddd;
+        	background-color: #009BFF;
         	overflow:hidden;
         	height: 50px;
         	padding:0px;
@@ -123,6 +135,7 @@
         	margin-left:10px;
         	text-decoration:none;
         	font-size:17px;
+        	color: rgb(255,255,255);
         }
 
         .navbar .login {
@@ -136,19 +149,157 @@
         	font-size:17px;
         	border:none;
         	width:120px;
-        	border-color:#ddd;
+        	border-color:#009BFF;
         }
 
         .navbar .login button {
         	float:right;
         	padding:0px;
-        	background: #ddd;
+        	background: #FFFFFF;
         	border:none;
         }
 
         .navbar .login button:hover {
-        	background-color:#ddd;
+        	background-color:#f1f1f1;
         }
+
+
+        .checkbox-label input {
+        	position: absolute;
+        	opacity: 0;
+        	cursor: pointer;
+        }
+
+        .checkbox-label {
+        	display: block;
+        	position: relative;
+        	margin: auto;
+        	cursor: pointer;
+        	font-size: 22px;
+        	line-height: 24px;
+        	height: 24px;
+        	clear: both;
+
+        	padding-bottom: 5px;
+        	padding-top: 10px;
+
+        	padding-left: 35px;
+        	margin-bottom: 12px;
+    
+        }
+
+
+        .checkbox-label .checkbox-custom {
+        	position: absolute;
+        	top: 0px;
+        	left: 0px;
+        	height: 24px;
+        	width: 24px;
+        	background-color: transparent;
+        	border-radius: 5px;
+        	border: 2px solid #FFFFFF;
+
+        	transition: all 0.3s ease-out;
+        	-webkit-transition: all 0.3s ease-out;
+        	-moz-transition: all 0.3s ease-out;
+        	-ms-transition: all 0.3s ease-out;
+        	-o-transition: all 0.3s ease-out;
+        }
+
+        .checkbox-label .checkbox-custom::after {
+        	position: absolute;
+        	content: "";
+        	left: 12px;
+        	top: 12px;
+        	height: 0px;
+        	width: 0px;
+        	border-radius: 5px;
+        	border: solid #009BFF;
+        	border-width: 0 3px 3px 0;
+        	-webkit-transform: rotate(0deg) scale(0);
+        	-ms-transform: rotate(0deg) scale(0);
+        	transform: rotate(0deg) scale(0);
+        	opacity:1;
+
+        	transition: all 0.3s ease-out;
+        	-webkit-transition: all 0.3s ease-out;
+        	-moz-transition: all 0.3s ease-out;
+        	-ms-transition: all 0.3s ease-out;
+        	-o-transition: all 0.3s ease-out;
+        }
+
+        .checkbox-label input:checked ~ .checkbox-custom {
+        	background-color: #FFFFFF;
+        	border-radius: 5px;
+        	-webkit-transform: rotate(0deg) scale(1);
+        	-ms-transform: rotate(0deg) scale(1);
+        	transform: rotate(0deg) scale(1);
+        	opacity:1;
+        	border: 2px solid #FFFFFF;
+        }
+
+        .checkbox-label input:checked ~ .checkbox-custom::after {
+        	-webkit-transform: rotate(45deg) scale(1);
+        	-ms-transform: rotate(45deg) scale(1);
+        	transform: rotate(45deg) scale(1);
+        	opacity:1;
+        	left: 8px;
+        	top: 3px;
+        	width: 6px;
+        	height: 12px;
+        	border: solid #0098FF;
+        	border-width: 0 2px 2px 0;
+        	background-color: transparent;
+        	border-radius: 0;
+        }
+
+        .checkbox-input-label {
+        	display: inline-block;
+        	text-align: right;
+        	clear: both;
+        	padding: 0px;
+        	font-size: 16px;
+        	color: rgba(255,255,255);
+        	font-weight: 4px;
+
+        }
+
+        .card .checkbox-container {
+        	float: left;
+        	width: 100%;
+        	box-sizing: border-box;
+        	text-align: center;
+        	padding: 0px;
+        }
+
+        .card {
+        	width: 200px;
+        	margin: 20px;
+        	clear: both;
+        	display: table-cell;
+        	padding: 50px;
+        	background-color: #009BFF;
+        	border-radius: 4px;
+        }
+
+        .card::after {
+        	clear: both;
+        	display: table-cell;
+        	content: "";
+        }
+
+        .wrap {
+        	display:table;
+        }
+
+        .space {
+        	margin: 10px;
+        }
+
+
+
+
+
 
 
 
@@ -172,22 +323,89 @@
 		<form class="wrapper" action="/form-handler" method="POST">
 
 			<img class="search-icon" src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Search_Icon.svg">
-			<input class="search" placeholder="Search" type="text" name="query">
-
+			<input class="search" placeholder="Search" type="text" name="searchterm">
+			<label for = "search_by">Search by:</label>
+			
+			<select name = "search_by", id="search_by">
+				<option value ="title">Title</option>
+				<option value ="participant">Participant</option>
+				<option value ="place">Place</option>
+			</select>
 		</form>
 
-		<!-- Table with results from database -->
-	    <table class="hover-table">
+		<div class="wrap">
 
-        <!-- nested for loops in jinja template -->
-		{%for row in rows%}
-		    <tr>
-		    {%for col in row%}
-		        <td>{{col}}</td>
-		    {%endfor%}
+			<div class="space"></div>
+
+			<!-- Checkboxes -->
+			<div class = "card">
+				<div class = "checkbox-container"> 
+					<label class="checkbox-label"> 
+						<div class="checkbox-input-label">Oral History</div>
+						<input type="checkbox">
+						<span class="checkbox-custom"></span>
+					</label>
+
+					<label class="checkbox-label">
+						<div class="checkbox-input-label">Jewish History</div>
+						<input type="checkbox">
+						<span class="checkbox-custom"></span>
+					</label>
+
+
+					<label class="checkbox-label">
+						<div class="checkbox-input-label">YMHA</div>
+						<input type="checkbox">
+						<span class="checkbox-custom"></span>
+					</label>
+
+
+					<label class="checkbox-label">
+						<div class="checkbox-input-label">Ewing</div>
+						<input type="checkbox">
+						<span class="checkbox-custom"></span>
+					</label>
+
+					<label class="checkbox-label">
+						<div class="checkbox-input-label">Interview</div>
+						<input type="checkbox">
+						<span class="checkbox-custom"></span>
+					</label>
+
+					<label class="checkbox-label">
+						<div class="checkbox-input-label">Immigration</div>
+						<input type="checkbox">
+						<span class="checkbox-custom"></span>
+					</label>
+
+
+				</div>
+			</div>
+
+			<div space="space"></div>
+
+
+			<!-- Table with results from database -->
+		    <table class="hover-table">
+
+	        <tr>
+		    	<th>Title</th>
+			<th>Date of Recording</th>
 		    </tr>
-		{%endfor%}
-		</table>
+	        <!-- nested for loops in jinja template -->
+			{%for row in rows%}
+			    <tr>
+			    <td>{{row[1]}}</td>
+			    <td>{{row[2]}}</td>
+			    </tr>
+			{%endfor%}
+			</table>
+
+			<div class="space"></div>
+
+		</div>
+
+	
 
     </body>
 
