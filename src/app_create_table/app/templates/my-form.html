@@ -1,63 +1,67 @@
 <!-- /templates/my-form.html-->
-
+<!DOCTYPE html>
 <html>
 
     <head>
         <title>Trentoniana Audio Files App</title>
+        <meta name="description" 
+        	content="A database for Trentoniana Library's Audio Files" />
+        <meta http-equiv="author"
+        	content="CSC315-03 Team 5: Alyssa, Dean, and Sarah" />
+        <meta http-equiv="pragma"
+        	content="no-cache" />
     </head>
 
-    <!-- minimal styling -->
+    <!-- CSS styling for document -->
     <style>
-        form {
-            margin: 1%;
-        }
 
-        div {
-            margin: 1% 0;
-        }
+    	/* import open sans font */
+    	@import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
         body {
-        	margin: 0px;
-        	font-family: Arial, Helvetica, sans-serif;
+        	margin:0px;
+        	font-family: 'Open Sans', sans-serif;
         }
 
-        th:tr{
-        color: blue;
-	    }
-	    tr:nth-of-type(2n){
-	        border: 1px solid grey;
-	        background-color: #f5f5f5;
-	    }
-
+        /* table heading formatting */
+        th {
+        	background-color: #009BFF;
+        	color: #FFFFFF;
+        	border: 1px solid white;
+        	padding: 5px;
+        	width: 600px;
+        	border-radius: 5px 5px 0px 0px;
+        }
+	    
+	    /* white separation lines for table */
 	    td{
 	        padding: 8px 8px;
-	        border: 1px solid grey; 
+	        border: 1px solid white; 
 	    }
 
+	    /* table general formatting */
 	    .hover-table{
-	    	margin-top: 30px;
-	    	margin-right: 20px;
-	    	margin-left: auto;
 	    	border-collapse:collapse;
 	    	border-spacing:0;
-	    	width:60%;
+	    	width:600px;
 	    	text-align: right;
-	    	display:table;
-	    	border: 1px solid #ccc;
+	    	display:table-cell;
+	    	border-radius: 5px 5px 0px 0px;
+
+	    	/* fixes table positioning issue */
+	    	position:relative;
+	    	left: 50px;
+	    	right:20px;
+	    	bottom: 18px;			
 	    }
 
-	    .hover-table tr{
-	    	border-bottom:1px solid #ddd;
-	    }
-
-	    .hover-table tr:nth-child(odd){
-	    	background-color: #fff;
-	    }
-
+	    /* shade even table rows a light grey color and borders white */
 	    .hover-table tr:nth-child(even){
+	    	border: 1px solid white;
 	    	background-color: #f1f1f1;
 	    }
 
+	    /* table entry text formatting */
 	    .hover-table td, .hover-table th{
 	    	padding:8px 8px;
 	    	display: table-cell;
@@ -65,22 +69,22 @@
 	    	vertical-align:top;
 	    }
 
-	    .hover-table th:first-child, .hover-table td:first-child{
-	    	padding-left:16px;
-	    }
-
+	    /* when hovering over an entry, make it dark grey */
 	    .hover-table tbody tr:hover, .hover-table li:hover{
 	    	background-color:#ddd;
 	    }
 
-        .wrapper {
-        	margin-top: 20px;
+	    /* search spacing formatting*/
+        .search-spacing {
+        	margin-top: 30px;
+        	margin-bottom: 30px;
         	position: relative;
         	display:block;
-        	text-align: right;
+        	text-align: center;
         	min-width: 100px;
         }
 
+        /* magnifying glass search icon image formatting */
         .search-icon {
         	position: relative;
         	top: 6px;
@@ -88,32 +92,36 @@
         	width: 20px;
         }
 
+        /* search bar general formatting */
         .search {
-        	border: 1px solid grey;
+        	border: 1px solid #009BFF;
         	border-radius: 5px;
         	height: 40px;
         	width: 60%;
         	padding:2px 23px 2px 30px;
         	outline: 0px;
-        	background-color: #f5f5f5;
+        	background-color: white;
         	margin-right: 20px;
 	    	margin-left: auto;
         }
 
+        /* search bar is grey when hovered over */
         .search:hover, .search:focus {
-        	border: 1.5px solid #009688;
-        	background-color: white;
+        	border: 1.5px solid grey;
+        	background-color: #f5f5f5;
         }
 
+        /* navbar general formatting */
         .navbar {
         	box-sizing: border-box;
-        	background-color: #ddd;
+        	background-color: #009BFF;
         	overflow:hidden;
         	height: 50px;
         	padding:0px;
         	margin:0px;
         }
 
+        /* h3 text formatting for navbar */
         .navbar h3 {
         	float: left;
         	display:block;
@@ -123,42 +131,170 @@
         	margin-left:10px;
         	text-decoration:none;
         	font-size:17px;
+        	color: rgb(255,255,255);
+        	position: relative;
+        	bottom: 5px;
         }
 
-        .navbar .login {
+        /* login general formatting */
+        .login {
         	float:right;
-        	margin-right: 50px;
+        	margin-left: 20px;
+        	position: relative;
+        	top: 7px;
+        	right: 10px;
         }
 
-        .navbar input[type=text] {
-        	padding:2px;
-        	margin-top:0px;
-        	font-size:17px;
-        	border:none;
-        	width:120px;
-        	border-color:#ddd;
+        /* set formatting for original checkboxes to none */
+        .checkbox input {
+        	position: absolute;
+        	opacity: 0;
+        	cursor: pointer;
         }
 
-        .navbar .login button {
-        	float:right;
-        	padding:0px;
-        	background: #ddd;
-        	border:none;
+        /* checkbox general formatting (check box itself) */
+        .checkbox {
+        	display: block;
+        	position: relative;
+        	margin: auto;
+        	cursor: pointer;
+        	font-size: 22px;
+        	line-height: 24px;
+        	height: 24px;
+        	clear: both;
+
+        	padding-bottom: 5px;
+        	padding-top: 10px;
+        	padding-left: 35px;
+        	margin-bottom: 12px;
         }
 
-        .navbar .login button:hover {
-        	background-color:#ddd;
+        /* checking box formatting (box and text) and animation */
+         .checkbox-container {
+        	position: absolute;
+        	top: 0px;
+        	left: 0px;
+        	height: 24px;
+        	width: 24px;
+        	background-color: transparent;
+        	border-radius: 5px;
+        	border: 2px solid #FFFFFF;
+
+        	/* check animation checking box*/
+        	transition: all 0.3s ease-out;
+        	-webkit-transition: all 0.3s ease-out;
+        	-moz-transition: all 0.3s ease-out;
+        	-ms-transition: all 0.3s ease-out;
+        	-o-transition: all 0.3s ease-out;
         }
 
+        /* unchecking box formatting (box and text) and animation */
+        .checkbox .checkbox-container::after {
+        	position: absolute;
+        	content: "";
+        	left: 12px;
+        	top: 12px;
+        	height: 0px;
+        	width: 0px;
+        	border-radius: 5px;
+        	border: solid #009BFF;
+        	border-width: 0 3px 3px 0;
+        	-webkit-transform: rotate(0deg) scale(0);
+        	-ms-transform: rotate(0deg) scale(0);
+        	transform: rotate(0deg) scale(0);
+        	opacity:1;
 
+        	/* check animation unchecking box */
+        	transition: all 0.3s ease-out;
+        	-webkit-transition: all 0.3s ease-out;
+        	-moz-transition: all 0.3s ease-out;
+        	-ms-transition: all 0.3s ease-out;
+        	-o-transition: all 0.3s ease-out;
+        }
+
+        /* formatting for box when it is checked */
+        .checkbox input:checked ~ .checkbox-container {
+        	background-color: #FFFFFF;
+        	border-radius: 5px;
+        	-webkit-transform: rotate(0deg) scale(1);
+        	-ms-transform: rotate(0deg) scale(1);
+        	transform: rotate(0deg) scale(1);
+        	opacity:1;
+        	border: 2px solid #FFFFFF;
+        }
+
+        /* formatting for check mark in box for when it is checked */
+        .checkbox input:checked ~ .checkbox-container::after {
+        	-webkit-transform: rotate(45deg) scale(1);
+        	-ms-transform: rotate(45deg) scale(1);
+        	transform: rotate(45deg) scale(1);
+        	opacity:1;
+        	left: 8px;
+        	top: 3px;
+        	width: 6px;
+        	height: 12px;
+        	border: solid #0098FF;
+        	border-width: 0 2px 2px 0;
+        	background-color: transparent;
+        	border-radius: 0;
+        }
+
+        /* text formatting for checkbox label */
+        .checkbox-input-label {
+        	display: inline-block;
+        	text-align: left;
+        	float: left;
+        	clear: both;
+        	position: relative;
+        	bottom:8px;
+        	font-size: 16px;
+        	color: rgba(255,255,255);
+        	font-weight: 4px;
+        }
+
+        /* formatting for boxes holding checkboxes - basically keeps everything aligned*/
+        .box .checkbox-box {
+        	float: left;
+        	width: 100%;
+        	box-sizing: border-box;
+        	text-align: center;
+        	padding: 0px;
+        }
+
+        /* general formatting for box holding checkboxes */
+        .box {
+        	width: 200px;
+        	margin: 20px;
+        	clear: both;
+        	display: table-cell;
+        	padding: 50px;
+        	background-color: #009BFF;
+        	border-radius: 5px;
+        }
+
+        /* formatting for box - keeps everything aligned */
+        .box::after {
+        	clear: both;
+        	display: table-cell;
+        	content: "";
+        }
+
+        /* table form alignment for checkboxes and table - makes table stay at top */
+        .wrap {
+        	display:table;
+        	margin: 20px;
+        	text-align: right;
+        }
 
     </style>
+
 
     <body>
 
     	<!-- Navigation Bar with Login -->
     	<div class ="navbar">
     		<h3>Trentoniana Audio Files App</h3>
+
     		<div class="login">
     			<form action="/login-handler" method="POST">
 	    			<input type="text" placeholder="Username" name="username">
@@ -166,33 +302,100 @@
 	    			<button type="submit">Login</button>
 	    		</form>
     		</div>
+
     	</div>
 
+
     	<!-- Search Bar -->
-		<form class="wrapper" action="/form-handler" method="POST">
+		<form id="top" class="search-spacing" action="/form-handler" method="POST">
 
 			<img class="search-icon" src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Search_Icon.svg">
-			<input class="search" placeholder="Search" type="text" name="query">
-
+			<input class="search" placeholder="Search" type="text" name="searchterm">
+			<label for = "search_by">Search by:</label>
+			
+			<!-- search by drop down menu -->
+			<select name="search_by">
+				<option value ="title">Title</option>
+				<option value ="participant">Participant</option>
+				<option value ="place">Place</option>
+			</select>
 		</form>
 
-		<!-- Table with results from database -->
-	    <table class="hover-table">
 
-        <!-- nested for loops in jinja template -->
-		{%for row in rows%}
-		    <tr>
-		    {%for col in row%}
-		        <td>{{col}}</td>
-		    {%endfor%}
-		    </tr>
-		{%endfor%}
-		</table>
+		<div class="wrap">
+
+			<!-- Checkboxes -->
+			<div class = "box">
+				<div class = "checkbox-box">
+
+					<!-- Oral History --> 
+					<label class="checkbox"> 
+						<div class="checkbox-input-label">Oral History</div>
+						<input type="checkbox">
+						<span class="checkbox-container"></span>
+					</label>
+
+					<!-- Jewish History-->
+					<label class="checkbox">
+						<div class="checkbox-input-label">Jewish History</div>
+						<input type="checkbox">
+						<span class="checkbox-container"></span>
+					</label>
+
+					<!-- YMHA -->
+					<label class="checkbox">
+						<div class="checkbox-input-label">YMHA</div>
+						<input type="checkbox">
+						<span class="checkbox-container"></span>
+					</label>
+
+					<!-- Ewing -->
+					<label class="checkbox">
+						<div class="checkbox-input-label">Ewing</div>
+						<input type="checkbox">
+						<span class="checkbox-container"></span>
+					</label>
+
+					<!-- Interview -->
+					<label class="checkbox">
+						<div class="checkbox-input-label">Interview</div>
+						<input type="checkbox">
+						<span class="checkbox-container"></span>
+					</label>
+
+					<!-- Immigration -->
+					<label class="checkbox">
+						<div class="checkbox-input-label">Immigration</div>
+						<input type="checkbox">
+						<span class="checkbox-container"></span>
+					</label>
+
+				</div>
+			</div>
+
+
+			<!-- Table with results from database -->
+		    <table class="hover-table">
+
+		    	<!-- table header -->
+		        <tr>
+			    	<th>Title</th>
+					<th>Date of Recording</th>
+			    </tr>
+		        <!-- nested for loops in jinja template -->
+				{%for row in rows%}
+				    <tr>
+				    <td><a href="/archives/{{row[0]}}">{{row[1]}}</a></td>
+				    <td>{{row[2]}}</td>
+				    </tr>
+				{%endfor%}
+			</table>
+
+		</div> <!-- end of wrap -->
 
     </body>
 
-   
+ </html>
 
 </html>
-
 

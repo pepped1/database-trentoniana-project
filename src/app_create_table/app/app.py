@@ -83,27 +83,84 @@ def connect(query):
             print('Database connection closed.')
     # return the query result from fetchall()
     return rows
+
+def search(searchterm, search_by):
+    """ Connect to the PostgreSQL database server """
+    conn = None
+    query = ""
+    try:
+        # read connection parameters from database.ini
+        params = config()
+ 
+        # connect to the PostgreSQL server
+        print('Connecting to the %s database...' % (params['database']))
+        conn = psycopg2.connect(**params)
+        print('Connected.')
+      
+        # create a cursor
+        cur = conn.cursor()
+        
+        # select what the query is based on dropdown
+        if search_by == "title":
+            query += "SELECT distinct AID, TITLE, INTERVIEW_DATE FROM SEARCHVIEW WHERE LOWER(title) LIKE \'%" + searchterm.lower() + "%\' order by INTERVIEW_DATE desc;"
+        elif search_by == "participant":
+            queryfirstname = "SELECT distinct AID, TITLE, INTERVIEW_DATE FROM SEARCHVIEW WHERE LOWER(first_name) LIKE \'%" + searchterm.lower() + "%\'"
+            querylastname = "SELECT distinct AID, TITLE, INTERVIEW_DATE FROM SEARCHVIEW WHERE LOWER(last_name) LIKE \'%" + searchterm.lower() + "%\'"
+            querymiddlename = "SELECT distinct AID, TITLE, INTERVIEW_DATE FROM SEARCHVIEW WHERE LOWER(middle_name) LIKE \'%" + searchterm.lower() + "%\'"
+            query += queryfirstname + " UNION " + querylastname + " UNION " + querymiddlename +  " order by INTERVIEW_DATE desc;"
+        
+        elif search_by == "place":
+            querycity = "SELECT distinct AID, TITLE, INTERVIEW_DATE FROM SEARCHVIEW WHERE LOWER(city) LIKE \'%" + searchterm.lower() + "%\'"
+            querystate = "SELECT distinct AID, TITLE, INTERVIEW_DATE FROM SEARCHVIEW WHERE LOWER(state) LIKE \'%" + searchterm.lower() + "%\'"
+            query += querycity + " UNION " + querystate  + " order by INTERVIEW_DATE desc; "
+
+        else:
+            pass
+
+        # execute a query using fetchall()
+        # query = "SELECT * FROM ARCHIVES WHERE LOWER(title) LIKE \'%" + searchterm.lower() + "%\';"
+        # cur.execute(query)
+        
+        cur.execute(query)
+        rows = cur.fetchall()
+        #colnames = [desc[0] for desc in cur.description]
+
+       # close the communication with the PostgreSQL
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+            print('Database connection closed.')
+    # return the query result from fetchall()
+    return rows
  
 # app.py
-
 app = Flask(__name__)
 
 
 # serve form web page
 @app.route("/")
 def form():
+    # handle form data
     return render_template('my-form.html')
 
-# handle form data
 @app.route('/form-handler', methods=['POST'])
 def handle_data():
-    rows = connect(request.form['query'])
-
+    rows = search(request.form['searchterm'], request.form['search_by'])
     return render_template('my-form.html', rows=rows)
 
+@app.route("/archives/<id>")
+def show(id):
+    query = "SELECT * FROM MAINVIEW WHERE AID = " + id + "LIMIT 1;"
+    row = connect(query)
+    return render_template('my-result.html', row = row)
+
 #handle login data
-@app.route('/login-handler', methods='POST')
-def handle_login():
+# @app.route('/login-handler', methods='POST')
+# def handle_login():
+#     return
 
 if __name__ == '__main__':
     app.run(debug = True)
